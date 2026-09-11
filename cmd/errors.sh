@@ -1,35 +1,36 @@
 
-# FAZER AINDA (vou apagar esses comentários feios no final, viu? kkk)
+# FAZER AINDA 
 # Opções inválidas - geral
-# Diretório inexistente - geral
 # Projeto sem arquivos .c - build
-# Ausência de arquivos fonte - build
 # Erros de compilação - build
-# Tentativa de run sem executável disponível - run
 # Permissões insuficientes - run
 
 erro=$1
 
 case $erro in
 	1)
-		echo "Erro: Comando inválido."
-		echo "Comandos disponíveis: build, run, clean, rebuild, info."
-		echo "Uso: ./cbuild <comando> [opções]"
-		;;
-	2)
 		echo "Erro: Diretório inexistente."
+		echo "Uso: ./cbuild <projeto> <comando> [opções]"
+		;;
+	2) 
+		echo "Erro: Ausência de arquivos-fonte."
 		;;
 	3)
-		echo "Erro: Diretório não possui arquivos .c"
+		echo "Erro: Comando inválido."
+		echo "Comandos disponíveis: build, run, clean, rebuild, info."
+		echo "Uso: ./cbuild <projeto> <comando> [opções]"
 		;;
 	4)
+		echo "Erro: Diretório não possui arquivos .c"
+		;;
+	5)
 		echo "Erro de Compilação: GCC não instalado."
 		;;
 	7) 
-		echo "Erro de Execução: Diretório não possui arquivo executável."
+		echo "Erro de Execução: Tentativa de run sem executável disponível."
 		;;
 	8) 
 		echo "Erro de Execução: Permissões insuficientes."
-		echo "Sugestão: 'chmod +x $EXEC.sh'"
+		echo "Sugestão: 'chmod +x ${EXEC}'"
 		;;
 esac
