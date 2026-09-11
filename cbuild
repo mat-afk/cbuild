@@ -1,28 +1,48 @@
 #!/bin/bash
 
-# Sintaxe: ./cbuild <comando> [opções]
+# Sintaxe: ./cbuild <projeto> <comando> [opções]
 
-export CMD_DIR="$PWD/cmd"
+export CMD_DIR="${PWD}/cmd"
+export PROJ="$1"
 
-case "$1" in
+# Erro: Diretório inexistente.
+if [[ ! -d "${PROJ}" ]]; then
+	bash "${CMD_DIR}/errors.sh" 1 
+	exit 1
+fi
+
+# Erro: Ausência de arquivos-fonte.
+for subdir in "src" "include" "tests" "docs"; do
+	if [[ ! -d "${PROJ}/${subdir}" ]]; then
+		bash "${CMD_DIR}/errors.sh" 2 
+		echo "(subdiretório ${subdir} indisponível.)"
+		exit 2
+	elif [[ -z $(ls "${PROJ}/${subdir}") ]]; then
+		bash "${CMD_DIR}/errors.sh" 2
+		echo "(subdiretório ${subdir} vazio.)"
+		exit 2
+	fi
+done
+
+case "$2" in
 	build)
-		bash "$CMD_DIR/build.sh"
+		bash "${CMD_DIR}/build.sh"
 		;;
 	run)
-		bash "$CMD_DIR/run.sh"
+		bash "${CMD_DIR}/run.sh"
 		;;
 	clean)
-		bash "$CMD_DIR/clean.sh"
+		bash "${CMD_DIR}/clean.sh"
 		;;
 	rebuild)
-		bash "$CMD_DIR/rebuild.sh"
+		bash "${CMD_DIR}/rebuild.sh"
 		;;
 	info)
-		bash "$CMD_DIR/info.sh"
+		bash "${CMD_DIR}/info.sh"
 		;;
 	*)
 		# Erro: Comando inválido.
-		bash "$CMD_DIR/errors.sh" 1
-		exit 1
+		bash "${CMD_DIR}/errors.sh" 3
+		exit 3
 		;;
 esac
