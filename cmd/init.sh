@@ -2,15 +2,15 @@
 
 prompt_cc() {
     local cc
-    local is_cc_invalid=true
+    local is_cc_valid=false
 
-    while $is_cc_invalid; do
+    until $is_cc_valid; do
         cc="$(prompt "Compiler" gcc)"
 
         if [[ "$cc" != "gcc" && "$cc" != "clang" ]]; then
             echo "'$cc' is not a recognized C compiler." >&2
         else
-            check_cc "$cc" && is_cc_invalid=false || echo "'$cc' is not installed." >&2
+            check_cc "$cc" && is_cc_valid=true || echo "'$cc' is not installed." >&2
         fi
     done
 
