@@ -32,4 +32,6 @@ build() {
     link "${objects[@]}"
 }
 
+check_cc_and_throw "$cc"
+echo "Building project..."
 build

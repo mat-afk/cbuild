@@ -3,6 +3,7 @@
 CBUILD_ROOT="$(cd "$(dirname "$0")" && pwd)"
 CMD_DIR="$CBUILD_ROOT/cmd"
 LIB_DIR="$CBUILD_ROOT/lib"
+RES_DIR="$CBUILD_ROOT/resources"
 
 source "$LIB_DIR/config.sh"
 source "$LIB_DIR/common.sh"
@@ -29,6 +30,6 @@ case "$cmd" in
         source "$CMD_DIR/info.sh"
         ;;
     *)
-        throw_error 3
+        throw_error unknown_command
         ;;
 esac

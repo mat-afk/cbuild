@@ -15,7 +15,7 @@ find_project_root() {
     return 1
 }
 
-PROJECT_ROOT="$(find_project_root)" || [[ "$1" == "init" ]] || {
+PROJECT_ROOT="$(find_project_root)" || [[ "$1" == "init" || "$1" == "" ]] || {
     echo "error: this is not a cbuild project (run 'cbuild init')" >&2
     exit 1
 }

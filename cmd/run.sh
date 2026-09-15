@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-$BIN
+check_cc_and_throw "$cc"
+
+if [[ -f "$BIN" ]]; then
+    "$BIN"
+else
+    throw_error missing_binaries
+fi

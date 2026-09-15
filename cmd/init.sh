@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+prompt_cc() {
+    local cc
+    local is_cc_invalid=true
+
+    while $is_cc_invalid; do
+        cc="$(prompt "Compiler" gcc)"
+
+        if [[ "$cc" != "gcc" && "$cc" != "clang" ]]; then
+            echo "'$cc' is not a recognized C compiler." >&2
+        else
+            check_cc "$cc" && is_cc_invalid=false || echo "'$cc' is not installed." >&2
+        fi
+    done
+
+    echo "$cc"
+}
+
 scaffold_conf() {
     local target_dir="$1"
     local project_name="$2"
@@ -10,15 +27,28 @@ scaffold_conf() {
         -e "s|@@PROJECT@@|$project_name|g" \
         -e "s|@@BINARY@@|$binary_name|g" \
         -e "s|@@CC@@|$cc|g" \
-        "$CBUILD_ROOT/resources/cbuild.template.conf" > "$target_dir/cbuild.conf"
+        "$RES_DIR/cbuild.template.conf" > "$target_dir/cbuild.conf"
 }
 
 scaffold_main() {
     local target_dir="$1"
     local src_dir="$target_dir/src"
 
+    [[ ! -d "$src_dir" ]] && mkdir -p "$src_dir"
+
     if [[ -z "$(ls -A "$src_dir" 2>/dev/null)" ]]; then
-        cp "$CBUILD_ROOT/resources/main.template.c" "$src_dir/main.c"
+        cp "$RES_DIR/main.template.c" "$src_dir/main.c"
+    fi
+}
+
+scaffold_tests() {
+    local target_dir="$1"
+    local tests_dir="$target_dir/tests"
+
+    [[ ! -d "$tests_dir" ]] && mkdir -p "$tests_dir"
+
+    if [[ -z "$(ls -A "$tests_dir" 2>/dev/null)" ]]; then
+        cp "$RES_DIR/main_test.template.c" "$tests_dir/main_test.c"
     fi
 }
 
@@ -27,16 +57,18 @@ scaffold_docs() {
     local project_name="$2"
     local docs_dir="$target_dir/docs"
 
+    [[ ! -d "$docs_dir" ]] && mkdir -p "$docs_dir"
+
     sed \
         -e "s|@@PROJECT@@|$project_name|g" \
-        "$CBUILD_ROOT/resources/README.template.md" > "$docs_dir/README.md"
+        "$RES_DIR/README.template.md" > "$docs_dir/README.md"
 }
 
 init() {
     local target_dir="${2:-$PWD}"
 
     if [[ -f "$target_dir/cbuild.conf" ]]; then
-        die "$target_dir is already a cbuild project (found cbuild.conf)"
+        die "Current directory ($target_dir) is already a cbuild project (found cbuild.conf)"
     fi
 
     echo "Creating new cbuild project..."
@@ -45,24 +77,23 @@ init() {
     local default_name="$(basename "$target_dir")"
     local project_name="$(prompt "Project name" "$default_name")"
     local binary_name="$(prompt "Binary name" "$project_name")"
-
-    local cc="$(prompt "Compiler" "gcc")"
-
-    echo
+    local cc="$(prompt_cc)"
 
     local dirs=(src include build build/obj tests docs)
     for d in "${dirs[@]}"; do
         mkdir -p "$target_dir/$d"
     done
 
-    echo "directory structure created (src/, include/, build/, tests/, docs/)"
+    echo
+    echo "Directory structure created (src/, include/, build/, tests/, docs/)"
     echo
 
     scaffold_conf "$target_dir" "$project_name" "$binary_name" "$cc"
     scaffold_main "$target_dir"
+    scaffold_tests "$target_dir"
     scaffold_docs "$target_dir" "$project_name"
 
-    echo "project '$project_name' inicialized in $target_dir"
+    echo "Project '$project_name' inicialized in $target_dir"
 }
 
 init "$@"
