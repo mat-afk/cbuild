@@ -1,11 +1,35 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-CC="clang"
+compile() {
+    local source="$1"
+    local object="$2"
 
-# Erro: GCC não instalado.
-[[ -z "which ${CC}" ]] && bash "${CMD_DIR}/errors.sh" 4 && exit 1
+    cmd=("$cc" -Wall -Wextra -MMD -MP -c "$source" -o "$object")
+    "${cmd[@]}"
+}
 
-# Erro: Projeto sem arquivos .c (bash "${CMD_DIR}/errors.sh" 3)
-# Erros de compilação (bash "${CMD_DIR}/errors.sh" ?)
+link() {
+    local objects=("$@")
 
-export EXEC="" #colocar o nome do arquivo executável
+    cmd=("$cc" "${objects[@]}" -o "$BIN")
+    ${cmd[@]}
+}
+
+build() {
+    local objects=()
+
+    for source in $SRC_DIR/*.c; do
+        local filename="$(basename "$source" .c)"
+        local object="$OBJ_DIR/$filename.o"
+
+        objects+=("$object")
+
+        if [[ ! -f "$object" || "$source" -nt "$object" ]]; then
+            compile "$source" "$object"
+        fi
+    done
+
+    link "${objects[@]}"
+}
+
+build
