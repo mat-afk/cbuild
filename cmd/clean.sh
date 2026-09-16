@@ -2,12 +2,16 @@
 
 clean()
 {
-    if [[ -f "$BUILD_DIR/app.exe" || -n "$(ls -A "$OBJ_DIR")" ]] then
-        echo "Cleaning..."
-        rm -v $BUILD_DIR/app.exe $OBJ_DIR/*
-    else
-        echo "Cleared"
-    fi
+    local tempfiles=($BUILD_DIR/app.exe $OBJ_DIR/*)
+
+    for i in "${tempfiles[@]}"; do
+        if [[ -e $i ]]; then
+            echo "Cleaning..."
+            rm -v $i
+        else
+            echo "File already removed"
+        fi
+    done
 }
 
 clean
