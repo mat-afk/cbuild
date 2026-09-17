@@ -29,6 +29,9 @@ case "$cmd" in
     info)
         source "$CMD_DIR/info.sh"
         ;;
+    help)
+        source "$CMD_DIR/help.sh"
+        ;;
     *)
         throw_error unknown_command
         ;;
