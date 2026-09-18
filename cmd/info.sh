@@ -1,34 +1,36 @@
 #!/usr/bin/env bash
 
+SCOPE="info"
+
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-files_c(){
+find_c_files() {
     find . -name "*.c" | wc -l
 }
 
-files_h(){
+find_h_files() {
     find . -name "*.h" | wc -l
 }
 
-path(){
+path() {
     echo "$SRC_DIR"
 }
 
-compiler(){
+compiler() {
     COMPILER="$(${cc:-cc} --version | head -n 1)"
     echo "$COMPILER"
 }
 
-kernel(){
+kernel() {
     echo "$(uname -r)"
 }
 
-size(){
+size() {
     du -sh . | cut -f1
 }
 
-lines(){
+lines() {
     grep '' -IR . | wc -l
 }
 
@@ -47,8 +49,8 @@ default(){
 
     echo "${bold} Quantities: ${normal}"
     echo "     Project size:    $(size)"
-    echo "     C files:         $(files_c)"
-    echo "     Header files:    $(files_h)"
+    echo "     C files:         $(find_c_files)"
+    echo "     Header files:    $(find_h_files)"
     echo "     Lines:           $(lines)"
 
     echo "${bold} Runs: ${normal}"
@@ -57,9 +59,9 @@ default(){
 
 }
 
-visual(){
+visual() {
 
-    cat > info.html <<EOF
+    cat > "$DOCS_DIR/info.html" <<EOF
         <!DOCTYPE html>
         <html lang="en">
 
@@ -159,12 +161,12 @@ visual(){
 
                 <div class="box">
                     <div class="label">C FILES</div>
-                    <div class="value">$(files_c)</div>
+                    <div class="value">$(find_c_files)</div>
                 </div>
 
                 <div class="box">
                     <div class="label">HEADER FILES</div>
-                    <div class="value">$(files_h)</div>
+                    <div class="value">$(find_h_files)</div>
                 </div>
 
             </div>
@@ -187,7 +189,7 @@ visual(){
         <script>
             const data = [{
                 labels: ["C", "Header"],
-                values: [$(files_c), $(files_h)],
+                values: [$(find_c_files), $(find_h_files)],
                 type: "pie"
             }];
 
@@ -202,15 +204,14 @@ visual(){
     </html>
 EOF
 
-    echo "File generated: info.html"
+    echo "Files generated:"
+    echo "+ docs/info.html"
 }
 
-flag=$2
-
 case "$flag" in
-    -v)
+    --visual|-v)
         visual
-        create_info_log "Info visual created."  "INFO"
+        create_info_log "Info visual created." "INFO"
         ;;
     *)
         default

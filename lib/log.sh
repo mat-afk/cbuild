@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
-LOG_DIR="$PROJECT_ROOT/logs"
-LOG_FILE="$LOG_DIR/cbuild.log"
+LOG_FILE="$LOGS_DIR/cbuild.log"
 
-mkdir -p "$LOG_DIR"
-
-create_log() {
+log() {
     local level="$1"
     local message="$2"
-    local command="$3"
+    local command="${SCOPE:-"cbuild"}"
 
     local date
     local log_entry
@@ -22,18 +19,27 @@ create_log() {
         echo "$log_entry" > "$LOG_FILE"
     fi
 
-    echo "$log_entry"
+    if [[ $DBG == true && $level == "DEBUG" ]]; then
+        echo "DEBUG: $message"
+    fi
 }
 
 create_success_log() {
-    create_log "SUCCESS" "$1" "$2"
-
+    log SUCCESS "$1"
 }
 
 create_info_log() {
-    create_log "INFO" "$1" "$2"
+    log INFO "$1"
+}
+
+create_warn_log() {
+    log WARN "$1"
+}
+
+log_debug() {
+    log DEBUG "$1"
 }
 
 create_error_log() {
-    create_log "ERROR" "$1" "$2"
+    log ERROR "$1"
 }

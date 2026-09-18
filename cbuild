@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 CBUILD_ROOT="$(cd "$(dirname "$0")" && pwd)"
+
 CMD_DIR="$CBUILD_ROOT/cmd"
 LIB_DIR="$CBUILD_ROOT/lib"
 RES_DIR="$CBUILD_ROOT/resources"
+<<<<<<< HEAD
 
 source "$LIB_DIR/config.sh"
 source "$LIB_DIR/log.sh"
@@ -23,6 +25,28 @@ for arg in "$@"; do
 done
 
 cmd="$1"
+=======
+
+cmd="$1"
+shift
+
+source "$LIB_DIR/common.sh"
+source "$LIB_DIR/config.sh"
+source "$LIB_DIR/log.sh"
+
+flag="$1"
+VERB=false
+DBG=false
+
+case "$flag" in
+    --verbose|-v)
+        VERB=true
+        ;;
+    --debug|-d)
+        DBG=true
+        ;;
+esac
+>>>>>>> f64a008 (refactor: add scope to logging)
 
 case "$cmd" in
     init)
@@ -43,10 +67,10 @@ case "$cmd" in
     info)
         source "$CMD_DIR/info.sh"
         ;;
-    help)
+    help|--help|-h)
         source "$CMD_DIR/help.sh"
         ;;
     *)
-        throw_error unknown_command
+        source "$CMD_DIR/help.sh"
         ;;
 esac

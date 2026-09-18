@@ -15,11 +15,36 @@ find_project_root() {
     return 1
 }
 
-PROJECT_ROOT="$(find_project_root)" || [[ "$1" == "init" || "$1" == "" ]] || throw_error missing_source_files
-SRC_DIR="$PROJECT_ROOT/src"
-BUILD_DIR="$PROJECT_ROOT/build"
-OBJ_DIR="$BUILD_DIR/obj"
-BIN="$BUILD_DIR/app"
-LOG_DIR="$PROJECT_ROOT/logs"
+command_needs_conf() {
+    local command="$1"
 
-[[ -f "$PROJECT_ROOT/cbuild.conf" ]] && source "$PROJECT_ROOT/cbuild.conf"
+    local commands_that_need_conf=(build run clean rebuild info)
+
+    for command_that_need_conf in "${commands_that_need_conf[@]}"; do
+        if [[ "$command" == "$command_that_need_conf" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+PROJECT_ROOT=""
+
+if command_needs_conf "$cmd"; then
+    PROJECT_ROOT="$(find_project_root)" || throw_error missing_conf
+
+    SRC_DIR="$PROJECT_ROOT/src"
+    INCLUDE_DIR="$PROJECT_ROOT/include"
+    BUILD_DIR="$PROJECT_ROOT/build"
+    OBJ_DIR="$BUILD_DIR/obj"
+    DOCS_DIR="$PROJECT_ROOT/docs"
+    LOGS_DIR="$PROJECT_ROOT/logs"
+
+    BIN="$BUILD_DIR/app"
+
+    if [[ -f "$PROJECT_ROOT/cbuild.conf" ]]; then
+        source "$PROJECT_ROOT/cbuild.conf"
+        BIN="$BUILD_DIR/$output"
+    fi
+fi

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCOPE="init"
+
 prompt_cc() {
     local cc
     local is_cc_valid=false
@@ -41,6 +43,13 @@ scaffold_main() {
     fi
 }
 
+scaffold_include() {
+    local target_dir="$1"
+    local include_dir="$target_dir/include"
+
+    [[ ! -d "$include_dir" ]] && mkdir -p "$include_dir"
+}
+
 scaffold_tests() {
     local target_dir="$1"
     local tests_dir="$target_dir/tests"
@@ -80,7 +89,7 @@ init() {
     fi
 
     verbose "Creating new cbuild project..."
-	verbose "" 
+	verbose ""
 
     local default_name="$(basename "$target_dir")"
     local project_name="$(prompt "Project name" "$default_name")"
@@ -91,23 +100,19 @@ init() {
     for d in "${dirs[@]}"; do
         mkdir -p "$target_dir/$d"
     done
-	
-	verbose "" 
-    verbose "Directory structure created (src/, include/, build/, tests/, docs/, logs/)"
-	verbose "" 
+
+	echo
+    echo "Directory structure created (src/, include/, build/, tests/, docs/, logs/)"
+	echo
 
     scaffold_conf "$target_dir" "$project_name" "$binary_name" "$cc"
     scaffold_main "$target_dir"
+    scaffold_include "$target_dir"
     scaffold_tests "$target_dir"
     scaffold_docs "$target_dir" "$project_name"
     scaffold_logs "$target_dir"
 
-    LOG_DIR="$target_dir/logs"
-    LOG_FILE="$LOG_DIR/cbuild.log"
-
-    create_success_log "Project initiated"
-
-    verbose "Project '$project_name' initialized in $target_dir"
+    echo "Project initialized sucessfully."
 }
 
 init "$@"

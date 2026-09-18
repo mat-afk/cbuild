@@ -1,2 +1,2 @@
-/home/jazz/Projetos/cbuild/example/build/obj/main.o: \
- /home/jazz/Projetos/cbuild/example/src/main.c
+/home/mateus/Projects/cbuild/example/build/obj/main.o: \
+ /home/mateus/Projects/cbuild/example/src/main.c

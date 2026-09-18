@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 verbose() {
-	if [[ $VERB == 1 ]]; then
-		echo "$1" 
+    local message="$1"
+
+	if [[ $VERB == true ]]; then
+		echo "$message"
 	fi
 }
 
@@ -29,15 +31,11 @@ throw_error() {
     error="$1"
 
     case $error in
-    	unknown_command)
-    	    echo "cbuild is a tool for building, running and managing C projects."
-            die "usage: cbuild <init|build|clean|run|info> [options]"
-    		;;
     	missing_directory)
-    		echo "error: non-existing directory."
-    		die "usage: ./cbuild <init|build|clean|run|info> [options]"
+            dir="$2"
+    		echo "error: directory '$dir' does not exist."
     		;;
-    	missing_source_files)
+    	missing_conf)
 			die "error: this is not a cbuild project (run 'cbuild init')."
     		;;
 		invalid_cc)
@@ -50,14 +48,15 @@ throw_error() {
     	missing_binaries)
     		die "error: missing binaries (run 'cbuild build' to compile project)."
     		;;
-    	missing_files) ###
+    	missing_files)
     		die "error: no .c files."
 			;;
-    	permission_denied) ###
+    	permission_denied)
 			die "execution error: permission denied (run 'chmod +x ${BIN}' to grant permission)."
     		;;
     esac
 }
+
 check_cc_and_throw() {
     local cc="$1"
     check_cc "$cc" || throw_error missing_cc "$cc"
