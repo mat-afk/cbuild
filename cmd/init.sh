@@ -64,6 +64,13 @@ scaffold_docs() {
         "$RES_DIR/README.template.md" > "$docs_dir/README.md"
 }
 
+scaffold_logs() {
+    local target_dir="$1"
+    local logs_dir="$target_dir/logs"
+
+    [[ ! -d "$logs_dir" ]] && mkdir -p "$logs_dir"
+    [[ ! -f "$logs_dir/cbuild.log" ]] && touch "$logs_dir/cbuild.log"
+}
 init() {
     local target_dir="${2:-$PWD}"
 
@@ -85,15 +92,21 @@ init() {
     done
 
     echo
-    echo "Directory structure created (src/, include/, build/, tests/, docs/)"
+    echo "Directory structure created (src/, include/, build/, tests/, docs/, logs/)"
     echo
 
     scaffold_conf "$target_dir" "$project_name" "$binary_name" "$cc"
     scaffold_main "$target_dir"
     scaffold_tests "$target_dir"
     scaffold_docs "$target_dir" "$project_name"
+    scaffold_logs "$target_dir"
 
-    echo "Project '$project_name' inicialized in $target_dir"
+    LOG_DIR="$target_dir/logs"
+    LOG_FILE="$LOG_DIR/cbuild.log"
+
+    create_success_log "Project initiated"
+
+    echo "Project '$project_name' initialized in $target_dir"
 }
 
 init "$@"

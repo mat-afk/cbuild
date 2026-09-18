@@ -23,5 +23,6 @@ SRC_DIR="$PROJECT_ROOT/src"
 BUILD_DIR="$PROJECT_ROOT/build"
 OBJ_DIR="$BUILD_DIR/obj"
 BIN="$BUILD_DIR/app"
+LOG_DIR="$PROJECT_ROOT/logs"
 
 [[ -f "$PROJECT_ROOT/cbuild.conf" ]] && source "$PROJECT_ROOT/cbuild.conf"

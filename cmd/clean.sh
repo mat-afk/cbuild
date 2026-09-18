@@ -8,6 +8,7 @@ clean()
         if [[ -e $i ]]; then
             echo "Cleaning..."
             rm -v $i
+            create_success_log "Project cleaned with success"
         else
             echo "File already removed"
         fi
