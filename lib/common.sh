@@ -24,39 +24,60 @@ check_cc() {
 # Projeto sem arquivos .c - build
 # Erros de compilação - build
 # Permissões insuficientes - run
-
 throw_error() {
-    error="$1"
+    local error="$1"
 
-    case $error in
-    	1)
-    		echo "Erro: Diretório inexistente."
-    		echo "Uso: ./cbuild <projeto> <comando> [opções]"
-    		;;
-    	2)
-    		echo "Erro: Ausência de arquivos-fonte."
-    		;;
-    	unknown_command)
-    	    echo "cbuild is a tool for building, running and managing C projects."
+    case "$error" in
+        1)
+            local message="Non-existing directory."
+            echo "Uso: ./cbuild <projeto> <comando> [opções]"
+            create_error_log "$message"
+            ;;
+
+        2)
+            local message="Source files are missing."
+            echo "Erro: Ausência de arquivos-fonte."
+            create_error_log "$message"
+            ;;
+
+        unknown_command)
+            local message="Unknown cbuild command."
+            create_error_log "$message"
             die "use: cbuild <init|build|clean|run|info> [options]"
-    		;;
-    	4)
-    		echo "Erro: Diretório não possui arquivos .c"
-    		;;
-    	missing_cc)
+            ;;
+
+        4)
+            local message="Directory doesn't have any C files"
+            create_error_log "$message"
+            ;;
+
+        missing_cc)
             local cc="$2"
-    		die "Error: '$cc' is not installed."
-    		;;
-    	missing_binaries)
-    		die "Error: missing binaries (run 'cbuild build' to compile project)"
-    		;;
-    	8)
-    		echo "Erro de Execução: Permissões insuficientes."
-    		echo "Sugestão: 'chmod +x ${EXEC}'"
-    		;;
+            local message="'$cc' is not installed."
+            create_error_log "$message"
+            die "$message"
+            ;;
+
+        missing_binaries)
+            local message="Missing binaries (run 'cbuild build' to compile project)"
+            create_error_log "$message"
+            die "$message"
+            ;;
+
+        8)
+            local message="Insufficient permissions."
+            echo "Erro de Execução: Permissões insuficientes."
+            echo "Sugestão: 'chmod +x ${EXEC}'"
+            create_error_log "$message"
+            ;;
+
+        *)
+            local message="Unknown error."
+            create_error_log "$message"
+            die "$message"
+            ;;
     esac
 }
-
 check_cc_and_throw() {
     local cc="$1"
     check_cc "$cc" || throw_error missing_cc "$cc"

@@ -6,8 +6,9 @@ LIB_DIR="$CBUILD_ROOT/lib"
 RES_DIR="$CBUILD_ROOT/resources"
 
 source "$LIB_DIR/config.sh"
-source "$LIB_DIR/common.sh"
 source "$LIB_DIR/log.sh"
+source "$LIB_DIR/common.sh"
+
 
 cmd="$1"
 

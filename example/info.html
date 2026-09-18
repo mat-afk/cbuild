@@ -1,65 +1,3 @@
-#!/usr/bin/env bash
-
-bold=$(tput bold)
-normal=$(tput sgr0)
-
-files_c(){
-    find . -name "*.c" | wc -l
-}
-
-files_h(){
-    find . -name "*.h" | wc -l
-}
-
-path(){
-    echo "$SRC_DIR"
-}
-
-compiler(){
-    COMPILER="$(${cc:-cc} --version | head -n 1)"
-    echo "$COMPILER"
-}
-
-kernel(){
-    echo "$(uname -r)"
-}
-
-size(){
-    du -sh . | cut -f1
-}
-
-lines(){
-    grep '' -IR . | wc -l
-}
-
-default(){
-    LAST_RUN="$(grep '\[RUN\]' "$LOG_FILE" | head -n 1)"
-    LAST_BUILD="$(grep -E '\[(BUILD|REBUILD)\]' "$LOG_FILE" | head -n 1)"
-
-    echo "     Last run:   $LAST_RUN"
-    echo "     Last build: $LAST_BUILD"
-    echo "$LAST_RUN"
-    echo "${bold} System: ${normal}"
-    echo "     Kernel:          $(kernel)"
-    echo "     Compiler:        $(compiler)"
-
-    echo ""
-
-    echo "${bold} Quantities: ${normal}"
-    echo "     Project size:    $(size)"
-    echo "     C files:         $(files_c)"
-    echo "     Header files:    $(files_h)"
-    echo "     Lines:           $(lines)"
-
-    echo "${bold} Runs: ${normal}"
-    echo "     Last run:         ${LAST_RUN}"
-    echo "     Last build:         ${LAST_BUILD}"
-
-}
-
-visual(){
-
-    cat > info.html <<EOF
         <!DOCTYPE html>
         <html lang="en">
 
@@ -133,12 +71,12 @@ visual(){
 
                 <div class="box">
                     <div class="label">KERNEL</div>
-                    <div class="value">$(kernel)</div>
+                    <div class="value">7.2.4-3-cachyos</div>
                 </div>
 
                 <div class="box">
                     <div class="label">COMPILER</div>
-                    <div class="value">$(compiler)</div>
+                    <div class="value">gcc (GCC) 16.2.1 20260810</div>
                 </div>
 
             </div>
@@ -149,22 +87,22 @@ visual(){
 
                 <div class="box">
                     <div class="label">SIZE</div>
-                    <div class="value">$(size)</div>
+                    <div class="value">48K</div>
                 </div>
 
                 <div class="box">
                     <div class="label">LINES</div>
-                    <div class="value">$(lines)</div>
+                    <div class="value">105</div>
                 </div>
 
                 <div class="box">
                     <div class="label">C FILES</div>
-                    <div class="value">$(files_c)</div>
+                    <div class="value">2</div>
                 </div>
 
                 <div class="box">
                     <div class="label">HEADER FILES</div>
-                    <div class="value">$(files_h)</div>
+                    <div class="value">1</div>
                 </div>
 
             </div>
@@ -187,7 +125,7 @@ visual(){
         <script>
             const data = [{
                 labels: ["C", "Header"],
-                values: [$(files_c), $(files_h)],
+                values: [2, 1],
                 type: "pie"
             }];
 
@@ -200,20 +138,3 @@ visual(){
         </script>
 
     </html>
-EOF
-
-    echo "File generated: info.html"
-}
-
-flag=$2
-
-case "$flag" in
-    -v)
-        visual
-        create_info_log "Info visual created."  "INFO"
-        ;;
-    *)
-        default
-        create_info_log "Info created." "INFO"
-        ;;
-esac

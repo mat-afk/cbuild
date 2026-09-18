@@ -35,4 +35,4 @@ build() {
 check_cc_and_throw "$cc"
 echo "Building project..."
 build
-create_build_log "Project build successfully"
+create_info_log "Project build successfully." "BUILD"
