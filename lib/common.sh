@@ -57,7 +57,6 @@ throw_error() {
     		;;
     esac
 }
-
 check_cc_and_throw() {
     local cc="$1"
     check_cc "$cc" || throw_error missing_cc "$cc"

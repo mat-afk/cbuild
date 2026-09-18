@@ -4,7 +4,7 @@ check_cc_and_throw "$cc"
 
 if [[ -f "$BIN" ]]; then
     "$BIN"
-    create_info_log "The project has started running"
+    create_info_log "The project has started running." "RUN"
 else
     throw_error missing_binaries
 fi

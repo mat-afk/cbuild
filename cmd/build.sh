@@ -35,4 +35,4 @@ build() {
 check_cc_and_throw "$cc"
 verbose "Building project..."
 build
-create_build_log "Project built successfully"
+create_info_log "Project build successfully." "BUILD"

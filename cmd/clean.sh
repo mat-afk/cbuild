@@ -8,7 +8,7 @@ clean()
         if [[ -e $i ]]; then
             verbose "Cleaning..."
             rm -v $i
-            create_success_log "Project cleaned with success"
+            create_success_log "Project cleaned with success." "CLEAN"
         else
             verbose "No temporary files"
         fi

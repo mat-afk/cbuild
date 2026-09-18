@@ -7,8 +7,9 @@ RES_DIR="$CBUILD_ROOT/resources"
 VERB=0
 
 source "$LIB_DIR/config.sh"
-source "$LIB_DIR/common.sh"
 source "$LIB_DIR/log.sh"
+source "$LIB_DIR/common.sh"
+
 
 cmd="$1"
 if [[ "$1" == "-v"]]; then

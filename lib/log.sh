@@ -1,40 +1,39 @@
 #!/usr/bin/env bash
 
+LOG_DIR="$PROJECT_ROOT/logs"
 LOG_FILE="$LOG_DIR/cbuild.log"
 
-LAST_RUN=""
-LAST_BUILD=""
+mkdir -p "$LOG_DIR"
 
 create_log() {
     local level="$1"
-    shift
+    local message="$2"
+    local command="$3"
 
-    local message="$*"
     local date
     local log_entry
 
     date="$(date '+%Y-%m-%d %H:%M:%S')"
-    log_entry="[$date] [$level] $message"
+    log_entry="[$date] [$command] [$level] $message"
 
-    sed -i "1i\\$log_entry" "$LOG_FILE"
+    if [[ -s "$LOG_FILE" ]]; then
+        sed -i "1i\\$log_entry" "$LOG_FILE"
+    else
+        echo "$log_entry" > "$LOG_FILE"
+    fi
 
     echo "$log_entry"
 }
 
-create_info_log() {
-    LAST_RUN="$(create_log "INFO" "$@")"
-}
-
 create_success_log() {
-	verbose "$1"
-    LAST_RUN="$(create_log "SUCCESS" "$@")"
+    create_log "SUCCESS" "$1" "$2"
+
 }
 
-create_build_log() {
-	verbose "$1"
-    LAST_BUILD="$(create_log "BUILD" "$@")"
+create_info_log() {
+    create_log "INFO" "$1" "$2"
 }
 
 create_error_log() {
-    LAST_RUN="$(create_log "ERROR" "$@")"
+    create_log "ERROR" "$1" "$2"
 }
