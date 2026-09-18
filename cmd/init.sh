@@ -71,6 +71,7 @@ scaffold_logs() {
     [[ ! -d "$logs_dir" ]] && mkdir -p "$logs_dir"
     [[ ! -f "$logs_dir/cbuild.log" ]] && touch "$logs_dir/cbuild.log"
 }
+
 init() {
     local target_dir="${2:-$PWD}"
 
@@ -78,8 +79,8 @@ init() {
         die "Current directory ($target_dir) is already a cbuild project (found cbuild.conf)"
     fi
 
-    echo "Creating new cbuild project..."
-    echo
+    verbose "Creating new cbuild project..."
+	verbose "" 
 
     local default_name="$(basename "$target_dir")"
     local project_name="$(prompt "Project name" "$default_name")"
@@ -90,10 +91,10 @@ init() {
     for d in "${dirs[@]}"; do
         mkdir -p "$target_dir/$d"
     done
-
-    echo
-    echo "Directory structure created (src/, include/, build/, tests/, docs/, logs/)"
-    echo
+	
+	verbose "" 
+    verbose "Directory structure created (src/, include/, build/, tests/, docs/, logs/)"
+	verbose "" 
 
     scaffold_conf "$target_dir" "$project_name" "$binary_name" "$cc"
     scaffold_main "$target_dir"
@@ -106,7 +107,7 @@ init() {
 
     create_success_log "Project initiated"
 
-    echo "Project '$project_name' initialized in $target_dir"
+    verbose "Project '$project_name' initialized in $target_dir"
 }
 
 init "$@"

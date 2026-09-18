@@ -26,10 +26,12 @@ create_info_log() {
 }
 
 create_success_log() {
+	verbose "$1"
     LAST_RUN="$(create_log "SUCCESS" "$@")"
 }
 
 create_build_log() {
+	verbose "$1"
     LAST_BUILD="$(create_log "BUILD" "$@")"
 }
 
