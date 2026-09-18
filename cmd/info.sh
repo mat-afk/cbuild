@@ -43,7 +43,7 @@ default(){
     echo "     Project size:    $(size)"
     echo "     C files:         $(files_c)"
     echo "     Header files:    $(files_h)"
-    echo "     Lines:           $(lines)"c
+    echo "     Lines:           $(lines)"
     echo "$LAST_RUN"
 
     echo -e "\n  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>"

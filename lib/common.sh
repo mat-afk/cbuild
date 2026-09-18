@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 verbose() {
-	if [[ $VERB == 0]]; then
+	if [[ $VERB == 1]]; then
 		echo "$1" 
 	fi
 }
