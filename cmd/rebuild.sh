@@ -7,6 +7,7 @@ rebuild()
 {
     clear
     build
+    create_build_log "Project rebuild successfully"
 }
 
 rebuild

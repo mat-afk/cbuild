@@ -33,17 +33,18 @@ lines(){
 }
 
 default(){
-    echo "${bold} Sistema: ${normal}"
+    echo "${bold} System: ${normal}"
     echo "     Kernel:          $(kernel)"
-    echo "     Compilador:      $(compiler)"
+    echo "     Compiler:        $(compiler)"
 
     echo ""
 
-    echo "${bold} Quantidades: ${normal}"
-    echo "     Tamanho projeto: $(size)"
-    echo "     Arquivos C:      $(files_c)"
-    echo "     Arquivos H:      $(files_h)"
-    echo "     Linhas:          $(lines)"
+    echo "${bold} Quantities: ${normal}"
+    echo "     Project size:    $(size)"
+    echo "     C files:         $(files_c)"
+    echo "     Header files:    $(files_h)"
+    echo "     Lines:           $(lines)"
+    echo "$LAST_RUN"
 
     echo -e "\n  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>"
 }
@@ -52,9 +53,10 @@ visual(){
 
     cat > info.html <<EOF
         <!DOCTYPE html>
-        <html lang="pt-BR">
+        <html lang="en">
 
         <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
         <head>
             <meta charset="UTF-8">
             <title>CBUILD - Project Info</title>
@@ -88,6 +90,11 @@ visual(){
                 .box {
                     border: 1px solid #00ff66;
                     padding: 20px;
+                    border-radius: 7px;
+                    display:flex;
+                    aling-itens:center;
+                    justify-content:center;
+                    flex-direction:column;
                 }
 
                 .label {
@@ -110,11 +117,9 @@ visual(){
 
         <main>
 
-            <h1>CBUILD :: INFO</h1>
+            <h1>CBUILD : Visual Information</h1>
 
-            <p>$</p>
-
-            <h2>Sistema</h2>
+            <h2>System</h2>
 
             <div class="grid">
 
@@ -124,42 +129,44 @@ visual(){
                 </div>
 
                 <div class="box">
-                    <div class="label">COMPILADOR</div>
+                    <div class="label">COMPILER</div>
                     <div class="value">$(compiler)</div>
                 </div>
 
             </div>
 
-            <h2>Projeto</h2>
+            <h2>Project</h2>
 
             <div class="grid">
 
                 <div class="box">
-                    <div class="label">TAMANHO</div>
+                    <div class="label">SIZE</div>
                     <div class="value">$(size)</div>
                 </div>
 
                 <div class="box">
-                    <div class="label">LINHAS</div>
+                    <div class="label">LINES</div>
                     <div class="value">$(lines)</div>
                 </div>
 
                 <div class="box">
-                    <div class="label">ARQUIVOS C</div>
+                    <div class="label">C FILES</div>
                     <div class="value">$(files_c)</div>
                 </div>
 
                 <div class="box">
-                    <div class="label">ARQUIVOS HEADER</div>
+                    <div class="label">HEADER FILES</div>
                     <div class="value">$(files_h)</div>
                 </div>
 
             </div>
 
-            <h2>Gráficos</h2>
-                <div class="box">
-                    <div class="label"> Quantidade de Headers e C</div>
-                    <div id="cEh"></div>
+            <h2>Charts</h2>
+
+            <div class="box">
+                <div class="label">C and Header File Count</div>
+                <div id="cEh"></div>
+            </div>
 
             <footer>
 
@@ -183,10 +190,11 @@ visual(){
 
             Plotly.newPlot("cEh", data, layout);
         </script>
+
     </html>
 EOF
 
-    echo "Arquivo gerado: info.html"
+    echo "File generated: info.html"
 }
 
 flag=$2
