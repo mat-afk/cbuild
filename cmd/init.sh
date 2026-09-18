@@ -8,9 +8,9 @@ prompt_cc() {
         cc="$(prompt "Compiler" gcc)"
 
         if [[ "$cc" != "gcc" && "$cc" != "clang" ]]; then
-            echo "'$cc' is not a recognized C compiler." >&2
+            throw_error invalid_compiler
         else
-            check_cc "$cc" && is_cc_valid=true || echo "'$cc' is not installed." >&2
+            check_cc "$cc" && is_cc_valid=true || throw_error missing_cc
         fi
     done
 

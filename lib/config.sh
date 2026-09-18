@@ -15,10 +15,7 @@ find_project_root() {
     return 1
 }
 
-PROJECT_ROOT="$(find_project_root)" || [[ "$1" == "init" || "$1" == "" ]] || {
-    echo "error: this is not a cbuild project (run 'cbuild init')" >&2
-    exit 1
-}
+PROJECT_ROOT="$(find_project_root)" || [[ "$1" == "init" || "$1" == "" ]] || throw_error missing_source_files
 SRC_DIR="$PROJECT_ROOT/src"
 BUILD_DIR="$PROJECT_ROOT/build"
 OBJ_DIR="$BUILD_DIR/obj"

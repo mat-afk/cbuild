@@ -19,40 +19,36 @@ check_cc() {
     command -v "$cc" >/dev/null 2>&1 && return 0 || return 1
 }
 
-# FAZER AINDA
-# Opções inválidas - geral
-# Projeto sem arquivos .c - build
-# Erros de compilação - build
-# Permissões insuficientes - run
-
 throw_error() {
     error="$1"
 
     case $error in
-    	1)
-    		echo "Erro: Diretório inexistente."
-    		echo "Uso: ./cbuild <projeto> <comando> [opções]"
-    		;;
-    	2)
-    		echo "Erro: Ausência de arquivos-fonte."
-    		;;
     	unknown_command)
     	    echo "cbuild is a tool for building, running and managing C projects."
-            die "use: cbuild <init|build|clean|run|info> [options]"
+            die "usage: cbuild <init|build|clean|run|info> [options]"
     		;;
-    	4)
-    		echo "Erro: Diretório não possui arquivos .c"
+    	missing_directory)
+    		echo "error: non-existing directory."
+    		die "usage: ./cbuild <init|build|clean|run|info> [options]"
+    		;;
+    	missing_source_files)
+			die "error: this is not a cbuild project (run 'cbuild init')."
+    		;;
+		invalid_cc)
+			die "'$cc' is not a recognized C compiler."
     		;;
     	missing_cc)
             local cc="$2"
-    		die "Error: '$cc' is not installed."
+    		die "error: '$cc' not installed."
     		;;
     	missing_binaries)
-    		die "Error: missing binaries (run 'cbuild build' to compile project)"
+    		die "error: missing binaries (run 'cbuild build' to compile project)."
     		;;
-    	8)
-    		echo "Erro de Execução: Permissões insuficientes."
-    		echo "Sugestão: 'chmod +x ${EXEC}'"
+    	missing_files) ###
+    		die "error: no .c files."
+			;;
+    	permission_denied) ###
+			die "execution error: permission denied (run 'chmod +x ${BIN}' to grant permission)."
     		;;
     esac
 }
