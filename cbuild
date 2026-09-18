@@ -12,7 +12,7 @@ source "$LIB_DIR/common.sh"
 
 
 cmd="$1"
-if [[ "$1" == "-v"]]; then
+if [[ "$1" == "-v" ]]; then
 	VERB=1
 	cmd="$2"
 fi
