@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
 verbose() {
-<<<<<<< HEAD
-	if [[ $VERB -eq 1]]; then
-=======
 	if [[ $VERB == 1 ]]; then
->>>>>>> defb2a7a5c045b5b4d6fe77506e2da5e81637d89
 		echo "$1" 
 	fi
 }
