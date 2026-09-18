@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+verbose() {
+	if [[ $VERB == 1]]; then
+		echo "$1" 
+	fi
+}
 die() {
     local message="$1"
     echo "$message" 1>&2 ; exit 1
@@ -19,63 +24,37 @@ check_cc() {
     command -v "$cc" >/dev/null 2>&1 && return 0 || return 1
 }
 
-# FAZER AINDA
-# Opções inválidas - geral
-# Projeto sem arquivos .c - build
-# Erros de compilação - build
-# Permissões insuficientes - run
 throw_error() {
-    local error="$1"
+    error="$1"
 
-    case "$error" in
-        1)
-            local message="Non-existing directory."
-            echo "Uso: ./cbuild <projeto> <comando> [opções]"
-            create_error_log "$message"
-            ;;
-
-        2)
-            local message="Source files are missing."
-            echo "Erro: Ausência de arquivos-fonte."
-            create_error_log "$message"
-            ;;
-
-        unknown_command)
-            local message="Unknown cbuild command."
-            create_error_log "$message"
-            die "use: cbuild <init|build|clean|run|info> [options]"
-            ;;
-
-        4)
-            local message="Directory doesn't have any C files"
-            create_error_log "$message"
-            ;;
-
-        missing_cc)
+    case $error in
+    	unknown_command)
+    	    echo "cbuild is a tool for building, running and managing C projects."
+            die "usage: cbuild <init|build|clean|run|info> [options]"
+    		;;
+    	missing_directory)
+    		echo "error: non-existing directory."
+    		die "usage: ./cbuild <init|build|clean|run|info> [options]"
+    		;;
+    	missing_source_files)
+			die "error: this is not a cbuild project (run 'cbuild init')."
+    		;;
+		invalid_cc)
+			die "'$cc' is not a recognized C compiler."
+    		;;
+    	missing_cc)
             local cc="$2"
-            local message="'$cc' is not installed."
-            create_error_log "$message"
-            die "$message"
-            ;;
-
-        missing_binaries)
-            local message="Missing binaries (run 'cbuild build' to compile project)"
-            create_error_log "$message"
-            die "$message"
-            ;;
-
-        8)
-            local message="Insufficient permissions."
-            echo "Erro de Execução: Permissões insuficientes."
-            echo "Sugestão: 'chmod +x ${EXEC}'"
-            create_error_log "$message"
-            ;;
-
-        *)
-            local message="Unknown error."
-            create_error_log "$message"
-            die "$message"
-            ;;
+    		die "error: '$cc' not installed."
+    		;;
+    	missing_binaries)
+    		die "error: missing binaries (run 'cbuild build' to compile project)."
+    		;;
+    	missing_files) ###
+    		die "error: no .c files."
+			;;
+    	permission_denied) ###
+			die "execution error: permission denied (run 'chmod +x ${BIN}' to grant permission)."
+    		;;
     esac
 }
 check_cc_and_throw() {

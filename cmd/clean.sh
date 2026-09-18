@@ -6,11 +6,11 @@ clean()
 
     for i in "${tempfiles[@]}"; do
         if [[ -e $i ]]; then
-            echo "Cleaning..."
+            verbose "Cleaning..."
             rm -v $i
             create_success_log "Project cleaned with success." "CLEAN"
         else
-            echo "File already removed"
+            verbose "No temporary files"
         fi
     done
 }

@@ -33,6 +33,6 @@ build() {
 }
 
 check_cc_and_throw "$cc"
-echo "Building project..."
+verbose "Building project..."
 build
 create_info_log "Project build successfully." "BUILD"
