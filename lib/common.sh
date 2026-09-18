@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 verbose() {
-	if [[ $VERB == 1]]; then
+	if [[ $VERB -eq 1]]; then
 		echo "$1" 
 	fi
 }
+
 die() {
     local message="$1"
     echo "$message" 1>&2 ; exit 1
