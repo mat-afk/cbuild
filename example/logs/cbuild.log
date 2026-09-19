@@ -1,3 +1,18 @@
+[2026-09-18 23:36:06] [build] [INFO] The project has started running.
+[2026-09-18 23:36:06] [build] [INFO] Project built successfully.
+[2026-09-18 23:36:06] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o /home/mateus/Projects/cbuild/example/build/obj/add.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:36:03] [build] [INFO] Project built successfully.
+[2026-09-18 23:36:03] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o /home/mateus/Projects/cbuild/example/build/obj/add.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:36:03] [build] [DEBUG] gcc -I/home/mateus/Projects/cbuild/example/include -Wall -Wextra -MMD -MP -c /home/mateus/Projects/cbuild/example/src/calc/add.c -o /home/mateus/Projects/cbuild/example/build/obj/add.o
+[2026-09-18 23:36:03] [build] [DEBUG] add.o does not exist or add.c is newer than add.o; recompiling...
+[2026-09-18 23:36:03] [build] [DEBUG] gcc -I/home/mateus/Projects/cbuild/example/include -Wall -Wextra -MMD -MP -c /home/mateus/Projects/cbuild/example/src/main.c -o /home/mateus/Projects/cbuild/example/build/obj/main.o
+[2026-09-18 23:36:03] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 23:35:57] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:35:57] [clean] [DEBUG] 
+[2026-09-18 23:35:57] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:35:57] [clean] [DEBUG] 
+[2026-09-18 23:35:57] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:35:57] [clean] [DEBUG] 
 [2026-09-18 23:32:43] [build] [INFO] The project has started running.
 [2026-09-18 23:32:43] [build] [INFO] Project built successfully.
 [2026-09-18 23:32:43] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
