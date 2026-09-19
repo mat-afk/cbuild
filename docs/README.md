@@ -12,6 +12,14 @@
 
 It was built from first principles as a learning project: instead of relying on `make` or `cmake`, cbuild re-creates the essential behavior of a build system (project discovery, incremental compilation, configuration, logging) in a handful of readable shell scripts.
 
+cbuild was made by
+- Felipe Cassio Rocha de Oliveira Lima
+- João Augusto Haupt Fonseca Oliveira
+- Mateus Cruzatto Ramos
+- Sarah Antunes
+
+The complete tecnical report for this project, as well as the required video demonstration, are in the [docs](https://github.com/mat-afk/cbuild/tree/main/docs) directory.
+
 ## Table of contents
 
 - [Features](#features)
