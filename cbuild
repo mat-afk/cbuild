@@ -5,27 +5,6 @@ CBUILD_ROOT="$(cd "$(dirname "$0")" && pwd)"
 CMD_DIR="$CBUILD_ROOT/cmd"
 LIB_DIR="$CBUILD_ROOT/lib"
 RES_DIR="$CBUILD_ROOT/resources"
-<<<<<<< HEAD
-
-source "$LIB_DIR/config.sh"
-source "$LIB_DIR/log.sh"
-source "$LIB_DIR/common.sh"
-
-VERBOSE=0; DEBUG=0;
-
-for arg in "$@"; do
-	case "$arg" in
-		-v | --verbose)
-			VERBOSE=1
-			;;
-		-d | --debugs)
-			DEBUG=1
-			;;
-	esac
-done
-
-cmd="$1"
-=======
 
 cmd="$1"
 shift
@@ -46,7 +25,6 @@ case "$flag" in
         DBG=true
         ;;
 esac
->>>>>>> f64a008 (refactor: add scope to logging)
 
 case "$cmd" in
     init)

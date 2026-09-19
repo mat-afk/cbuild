@@ -25,6 +25,8 @@ scaffold_conf() {
     local binary_name="$3"
     local cc="$4"
 
+    log_debug "Scaffolding cbuild.conf..."
+
     sed \
         -e "s|@@PROJECT@@|$project_name|g" \
         -e "s|@@BINARY@@|$binary_name|g" \
@@ -39,6 +41,7 @@ scaffold_main() {
     [[ ! -d "$src_dir" ]] && mkdir -p "$src_dir"
 
     if [[ -z "$(ls -A "$src_dir" 2>/dev/null)" ]]; then
+        log_debug "Scaffolding src/main.c"
         cp "$RES_DIR/main.template.c" "$src_dir/main.c"
     fi
 }
@@ -57,6 +60,7 @@ scaffold_tests() {
     [[ ! -d "$tests_dir" ]] && mkdir -p "$tests_dir"
 
     if [[ -z "$(ls -A "$tests_dir" 2>/dev/null)" ]]; then
+        log_debug "Scaffolding tests/main_test.c"
         cp "$RES_DIR/main_test.template.c" "$tests_dir/main_test.c"
     fi
 }
@@ -67,6 +71,8 @@ scaffold_docs() {
     local docs_dir="$target_dir/docs"
 
     [[ ! -d "$docs_dir" ]] && mkdir -p "$docs_dir"
+
+    log_debug "Scaffolding docs/README.md"
 
     sed \
         -e "s|@@PROJECT@@|$project_name|g" \
@@ -85,11 +91,11 @@ init() {
     local target_dir="${2:-$PWD}"
 
     if [[ -f "$target_dir/cbuild.conf" ]]; then
-        die "Current directory ($target_dir) is already a cbuild project (found cbuild.conf)"
+        throw_error already_initialized "$target_dir"
     fi
 
-    verbose "Creating new cbuild project..."
-	verbose ""
+    echo "Creating new cbuild project..."
+	echo
 
     local default_name="$(basename "$target_dir")"
     local project_name="$(prompt "Project name" "$default_name")"
@@ -98,6 +104,7 @@ init() {
 
     local dirs=(src include build build/obj tests docs)
     for d in "${dirs[@]}"; do
+        log_debug "Creating directory $dir"
         mkdir -p "$target_dir/$d"
     done
 
@@ -112,7 +119,9 @@ init() {
     scaffold_docs "$target_dir" "$project_name"
     scaffold_logs "$target_dir"
 
-    echo "Project initialized sucessfully."
+    msg="Project initialized sucessfully."
+    echo "$msg"
+    log_info "$msg"
 }
 
 init "$@"

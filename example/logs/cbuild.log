@@ -1,3 +1,141 @@
+[2026-09-18 22:33:09] [run] [INFO] The project has started running.
+[2026-09-18 22:33:06] [build] [INFO] Project built successfully.
+[2026-09-18 22:33:06] [build] [DEBUG] gcc
+[2026-09-18 22:33:06] [build] [DEBUG] gcc
+[2026-09-18 22:33:06] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 22:28:24] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:27:49] [build] [INFO] Project built successfully.
+[2026-09-18 22:27:49] [build] [DEBUG] gcc
+[2026-09-18 22:27:49] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:26:39] [build] [INFO] Project built successfully.
+[2026-09-18 22:26:39] [build] [DEBUG] gcc
+[2026-09-18 22:26:39] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:20:06] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:19:57] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:19:17] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:19:13] [clean] [INFO] Project cleaned with success.
+[2026-09-18 22:19:13] [clean] [DEBUG] 
+[2026-09-18 22:19:13] [clean] [INFO] Project cleaned with success.
+[2026-09-18 22:19:13] [clean] [DEBUG] 
+[2026-09-18 22:19:13] [clean] [INFO] Project cleaned with success.
+[2026-09-18 22:19:13] [clean] [DEBUG] 
+[2026-09-18 22:19:07] [run] [INFO] The project has started running.
+[2026-09-18 22:19:04] [run] [INFO] The project has started running.
+[2026-09-18 22:18:53] [run] [INFO] The project has started running.
+[2026-09-18 22:18:51] [run] [INFO] The project has started running.
+[2026-09-18 22:18:43] [build] [INFO] The project has started running.
+[2026-09-18 22:18:43] [build] [INFO] Project built successfully.
+[2026-09-18 22:18:43] [build] [DEBUG] gcc
+[2026-09-18 22:18:43] [build] [DEBUG] gcc
+[2026-09-18 22:18:43] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 22:18:43] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:18:20] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:15:53] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:14:08] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:13:37] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:13:15] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:12:51] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:12:20] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:11:50] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:11:03] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 22:10:31] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 21:35:17] [clean] [INFO] Project cleaned with success.
+[2026-09-18 21:35:17] [clean] [DEBUG] 
+[2026-09-18 21:35:17] [clean] [INFO] Project cleaned with success.
+[2026-09-18 21:35:17] [clean] [DEBUG] 
+[2026-09-18 21:35:17] [clean] [INFO] Project cleaned with success.
+[2026-09-18 21:35:17] [clean] [DEBUG] 
+[2026-09-18 21:35:14] [build] [INFO] Project built successfully.
+[2026-09-18 21:35:14] [build] [DEBUG] gcc
+[2026-09-18 21:35:14] [build] [DEBUG] gcc
+[2026-09-18 21:35:14] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 21:35:08] [clean] [INFO] Project cleaned with success.
+[2026-09-18 21:35:08] [clean] [DEBUG] 
+[2026-09-18 21:35:08] [clean] [INFO] Project cleaned with success.
+[2026-09-18 21:35:08] [clean] [DEBUG] 
+[2026-09-18 21:35:08] [clean] [INFO] Project cleaned with success.
+[2026-09-18 21:35:08] [clean] [DEBUG] 
+[2026-09-18 21:31:37] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:31:37] [clean] [DEBUG] 
+[2026-09-18 21:31:37] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:31:37] [clean] [DEBUG] 
+[2026-09-18 21:31:37] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:31:37] [clean] [DEBUG] 
+[2026-09-18 21:30:00] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:30:00] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:30:00] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:28:43] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:28:43] [build] [DEBUG] gcc
+[2026-09-18 21:28:43] [build] [DEBUG] gcc
+[2026-09-18 21:28:43] [build] [DEBUG] main.c is newer than main.o; recompiling...
+[2026-09-18 21:28:41] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:28:41] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:28:41] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:27:05] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:27:05] [build] [DEBUG] gcc
+[2026-09-18 21:27:05] [build] [DEBUG] gcc
+[2026-09-18 21:27:05] [build] [DEBUG] main.c is newer than main.o; recompiling...
+[2026-09-18 21:27:02] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:27:02] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:27:02] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:26:56] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:26:56] [build] [DEBUG] gcc
+[2026-09-18 21:26:33] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:26:33] [build] [DEBUG] gcc
+[2026-09-18 21:26:33] [build] [DEBUG] gcc
+[2026-09-18 21:26:33] [build] [DEBUG] main.c is newer than main.o; recompiling...
+[2026-09-18 21:26:30] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:26:30] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:26:30] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:26:12] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:26:12] [build] [DEBUG] gcc
+[2026-09-18 21:26:12] [build] [DEBUG] gcc
+[2026-09-18 21:26:12] [build] [DEBUG] main.c is newer than main.o; recompiling...
+[2026-09-18 21:26:10] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:26:10] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:26:10] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:25:38] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:25:38] [build] [DEBUG] gcc
+[2026-09-18 21:25:38] [build] [DEBUG] gcc
+[2026-09-18 21:25:38] [build] [DEBUG] main.c is newer than main.o; recompiling...
+[2026-09-18 21:25:29] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:25:29] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:25:29] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:25:23] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:25:23] [build] [DEBUG] gcc
+[2026-09-18 21:25:23] [build] [DEBUG] gcc
+[2026-09-18 21:25:23] [build] [DEBUG] main.c is newer than main.o; recompiling...
+[2026-09-18 21:25:18] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:25:18] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:25:18] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:20:45] [run] [INFO] The project has started running.
+[2026-09-18 21:16:44] [build] [INFO] The project has started running.
+[2026-09-18 21:16:44] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:16:44] [build] [DEBUG] gcc
+[2026-09-18 21:16:44] [build] [DEBUG] gcc
+[2026-09-18 21:16:44] [build] [DEBUG] /home/mateus/Projects/cbuild/example/src/main.c is newer than /home/mateus/Projects/cbuild/example/build/obj/main.o; recompiling...
+[2026-09-18 21:16:39] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:16:39] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:16:39] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:16:01] [build] [INFO] The project has started running.
+[2026-09-18 21:16:01] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:16:01] [build] [DEBUG] gcc
+[2026-09-18 21:16:01] [build] [DEBUG] gcc
+[2026-09-18 21:16:01] [build] [DEBUG] /home/mateus/Projects/cbuild/example/src/main.c is newer than /home/mateus/Projects/cbuild/example/build/obj/main.o; recompiling...
+[2026-09-18 21:15:54] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:15:54] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:15:54] [clean] [SUCCESS] Project cleaned with success.
+[2026-09-18 21:15:34] [run] [INFO] The project has started running.
+[2026-09-18 21:15:07] [run] [INFO] The project has started running.
+[2026-09-18 21:14:59] [run] [INFO] The project has started running.
+[2026-09-18 21:14:48] [run] [INFO] The project has started running.
+[2026-09-18 21:14:47] [run] [INFO] The project has started running.
+[2026-09-18 21:10:57] [build] [INFO] The project has started running.
+[2026-09-18 21:10:57] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:10:57] [build] [DEBUG] gcc
+[2026-09-18 21:10:53] [build] [INFO] The project has started running.
+[2026-09-18 21:10:53] [build] [SUCCESS] Project built successfully.
+[2026-09-18 21:10:53] [build] [DEBUG] gcc
 [2026-09-18 18:24:27] [build] [INFO] Project built successfully.
 [2026-09-18 18:24:27] [build] [DEBUG] gcc
 [2026-09-18 18:14:49] [run] [INFO] The project has started running.

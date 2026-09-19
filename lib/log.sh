@@ -24,15 +24,11 @@ log() {
     fi
 }
 
-create_success_log() {
-    log SUCCESS "$1"
-}
-
-create_info_log() {
+log_info() {
     log INFO "$1"
 }
 
-create_warn_log() {
+log_warn() {
     log WARN "$1"
 }
 
@@ -40,6 +36,6 @@ log_debug() {
     log DEBUG "$1"
 }
 
-create_error_log() {
+log_error() {
     log ERROR "$1"
 }

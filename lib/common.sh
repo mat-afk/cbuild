@@ -31,9 +31,13 @@ throw_error() {
     error="$1"
 
     case $error in
+        sources_missing)
+            dir="$2"
+       		die "error: no source file was found in 'src' directory, skipping."
+       		;;
     	missing_directory)
             dir="$2"
-    		echo "error: directory '$dir' does not exist."
+    		die "error: directory '$dir' does not exist."
     		;;
     	missing_conf)
 			die "error: this is not a cbuild project (run 'cbuild init')."
@@ -48,11 +52,12 @@ throw_error() {
     	missing_binaries)
     		die "error: missing binaries (run 'cbuild build' to compile project)."
     		;;
-    	missing_files)
-    		die "error: no .c files."
+    	already_initialized)
+            local target_dir="$2"
+    		die "error: current directory ($target_dir) is already a cbuild project (found cbuild.conf)"
 			;;
     	permission_denied)
-			die "execution error: permission denied (run 'chmod +x ${BIN}' to grant permission)."
+			die "error: permission denied (run 'chmod +x ${BIN}' to grant permission)."
     		;;
     esac
 }

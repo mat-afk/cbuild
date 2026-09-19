@@ -9,7 +9,7 @@ rebuild() {
     clear
     build
 
-    create_info_log "Project rebuilt successfully."
+    log_info "Project rebuilt successfully."
 }
 
 rebuild

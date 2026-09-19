@@ -15,6 +15,8 @@ compile() {
 link() {
     local objects=("$@")
 
+    verbose "LD  build/obj/*.o $output"
+
     cmd=("$cc" "${objects[@]}" -o "$BIN")
     log_debug "${cmd[@]}"
 
@@ -22,32 +24,47 @@ link() {
 }
 
 build() {
+    if [[ ! -d $SRC_DIR ]]; then
+        throw_error missing_directory src
+    fi
+
+    if [[ ! -d $BUILD_DIR ]]; then
+        throw_error missing_directory build
+    fi
+
+    if [[ ! -d $OBJ_DIR ]]; then
+        throw_error missing_directory build/obj
+    fi
+
     echo "Building project..."
 
     local objects=()
 
-    verbose "Compiling C files..."
     verbose
 
-    for source in $SRC_DIR/*.c; do
+    mapfile -t sources < <(find "$SRC_DIR" -type f -name "*.c")
+
+    if [[ ${#sources[@]} == 0 ]]; then
+        throw_error sources_missing
+    fi
+
+    for source in "${sources[@]}"; do
         local filename="$(basename "$source" .c)"
         local object="$OBJ_DIR/$filename.o"
 
         objects+=("$object")
 
         if [[ ! -f "$object" || "$source" -nt "$object" ]]; then
-            log_debug "$source is newer than $object; recompiling..."
+            log_debug "$filename.o does not exist or $filename.c is newer than $filename.o; recompiling..."
 
+            verbose "CC  $filename.c"
             compile "$source" "$object"
         fi
     done
 
-    verbose "Linking objects..."
-    verbose
-
     link "${objects[@]}"
 
-    create_success_log "Project built successfully."
+    log_info "Project built successfully."
 }
 
 check_cc_and_throw "$cc"

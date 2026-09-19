@@ -209,12 +209,12 @@ EOF
 }
 
 case "$flag" in
-    --visual|-v)
+    --html|--visual)
         visual
-        create_info_log "Info visual created." "INFO"
+        log_info "Info visual created."
         ;;
     *)
         default
-        create_info_log "Info created." "INFO"
+        log_info "Info created."
         ;;
 esac
