@@ -6,11 +6,15 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 find_c_files() {
-    find . -name "*.c" | wc -l
+    find "$PROJECT_ROOT" -type f -name "*.c" | wc -l;
 }
 
 find_h_files() {
-    find . -name "*.h" | wc -l
+    find "$PROJECT_ROOT" -type f -name "*.h" | wc -l;
+}
+
+size() {
+    du -sh "$PROJECT_ROOT" | cut -f1;
 }
 
 path() {
@@ -26,21 +30,30 @@ kernel() {
     echo "$(uname -r)"
 }
 
-size() {
-    du -sh . | cut -f1
+lines() {
+    find "$PROJECT_ROOT" -type f \( -name "*.c" -o -name "*.h" \) -exec cat {} + \
+        | grep -cv '^[[:space:]]*$'
 }
 
-lines() {
-    grep '' -IR . | wc -l
+last_entry() {
+    local pattern="$1"
+    local entry
+
+    entry="$(grep -m 1 -E "$pattern" "$LOG_FILE" 2>/dev/null)"
+
+    if [[ -z "$entry" ]]; then
+        echo "never"
+    else
+        sed -E 's/^\[([^]]*)\].*/\1/' <<< "$entry"
+    fi
 }
 
 default(){
-    LAST_RUN="$(grep '\[RUN\]' "$LOG_FILE" | head -n 1)"
-    LAST_BUILD="$(grep -E '\[(BUILD|REBUILD)\]' "$LOG_FILE" | head -n 1)"
+    local last_run last_build
 
-    echo "     Last run:   $LAST_RUN"
-    echo "     Last build: $LAST_BUILD"
-    echo "$LAST_RUN"
+    last_run="$(last_entry '\[run\] \[INFO\]')"
+    last_build="$(last_entry '\[(build|rebuild)\] \[INFO\]')"
+
     echo "${bold} System: ${normal}"
     echo "     Kernel:          $(kernel)"
     echo "     Compiler:        $(compiler)"
@@ -54,12 +67,17 @@ default(){
     echo "     Lines:           $(lines)"
 
     echo "${bold} Runs: ${normal}"
-    echo "     Last run:         ${LAST_RUN}"
-    echo "     Last build:         ${LAST_BUILD}"
+    echo "     Last run:         ${last_run}"
+    echo "     Last build:         ${last_build}"
 
 }
 
 visual() {
+
+    local last_run last_build
+
+    last_run="$(last_entry '\[run\] \[INFO\]')"
+    last_build="$(last_entry '\[(build|rebuild)\] \[INFO\]')"
 
     cat > "$DOCS_DIR/info.html" <<EOF
         <!DOCTYPE html>
@@ -69,7 +87,7 @@ visual() {
 
         <head>
             <meta charset="UTF-8">
-            <title>CBUILD - Project Info</title>
+            <title>cbuild: project info</title>
 
             <style>
                 body {
@@ -127,7 +145,7 @@ visual() {
 
         <main>
 
-            <h1>CBUILD : Visual Information</h1>
+            <h1>cbuild: project statistics</h1>
 
             <h2>System</h2>
 
@@ -171,6 +189,22 @@ visual() {
 
             </div>
 
+            <h2>Runs</h2>
+
+            <div class="grid">
+
+                <div class="box">
+                    <div class="label">LAST RUN</div>
+                    <div class="value">$last_run</div>
+                </div>
+
+                <div class="box">
+                    <div class="label">LAST BUILD</div>
+                    <div class="value">$last_build</div>
+                </div>
+
+            </div>
+
             <h2>Charts</h2>
 
             <div class="box">
@@ -204,8 +238,8 @@ visual() {
     </html>
 EOF
 
-    echo "Files generated:"
-    echo "+ docs/info.html"
+    verbose "Files generated:"
+    verbose "+ docs/info.html"
 }
 
 case "$flag" in

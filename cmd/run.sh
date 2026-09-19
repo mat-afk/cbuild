@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-SCOPE="run"
-
 check_cc_and_throw "$cc"
 
-source "$CMD_DIR/build.sh"
+SCOPE="run"
 
 if [[ ! -f $BIN ]]; then
     throw_error missing_binaries

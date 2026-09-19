@@ -102,14 +102,19 @@ init() {
     local binary_name="$(prompt "Binary name" "$project_name")"
     local cc="$(prompt_cc)"
 
-    local dirs=(src include build build/obj tests docs)
+    LOGS_DIR="$target_dir/logs"
+    mkdir -p $LOGS_DIR
+
+    LOG_FILE="$LOGS_DIR/$LOG_FILE_NAME"
+
+    local dirs=(src/ include/ build/ build/obj/ tests/ docs/ logs/)
     for d in "${dirs[@]}"; do
         log_debug "Creating directory $dir"
         mkdir -p "$target_dir/$d"
     done
 
 	echo
-    echo "Directory structure created (src/, include/, build/, tests/, docs/, logs/)"
+    echo "Directory structure created (${dirs[*]})"
 	echo
 
     scaffold_conf "$target_dir" "$project_name" "$binary_name" "$cc"
@@ -119,7 +124,7 @@ init() {
     scaffold_docs "$target_dir" "$project_name"
     scaffold_logs "$target_dir"
 
-    msg="Project initialized sucessfully."
+    local msg="Project initialized sucessfully."
     echo "$msg"
     log_info "$msg"
 }
