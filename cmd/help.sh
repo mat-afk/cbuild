@@ -48,6 +48,9 @@ echo
 echo "  -h, --help"
 echo "      Display this help message."
 echo
+echo "  --html, --visual"
+echo "     Use as an 'info' option to generate a HTML page for statistics."
+echo
 echo "Examples:"
 echo "  cbuild init"
 echo "      Initialize a new project."
