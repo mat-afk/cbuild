@@ -2,12 +2,9 @@
 
 SCOPE="rebuild"
 
-source "$CMD_DIR/clean.sh"
-source "$CMD_DIR/build.sh"
-
 rebuild() {
-    clear
-    build
+    source "$CMD_DIR/clean.sh"
+    source "$CMD_DIR/build.sh"
 
     log_info "Project rebuilt successfully."
 }

@@ -10,7 +10,7 @@ prompt_cc() {
         cc="$(prompt "Compiler" gcc)"
 
         if [[ "$cc" != "gcc" && "$cc" != "clang" ]]; then
-            throw_error invalid_compiler
+            throw_error invalid_cc
         else
             check_cc "$cc" && is_cc_valid=true || throw_error missing_cc
         fi

@@ -5,7 +5,7 @@ SCOPE="run"
 check_cc_and_throw "$cc"
 
 there_are_newer_sources() {
-    for file in "$SRC_DIR/*.c"; do
+    for file in $SRC_DIR/*.c; do
         if [[ $file -nt $BIN ]]; then
             return 0
         fi

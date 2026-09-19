@@ -4,15 +4,15 @@ CBUILD_ROOT="$(cd "$(dirname "$0")" && pwd)"
 echo "$CBUILD_ROOT"
 BASHRC="$HOME/.bashrc"
 
-echo "Instalando CBuild em $CBUILD_ROOT"
+echo "Installing cbuild in $CBUILD_ROOT"
 
 if ! grep -qF "$CBUILD_ROOT" "$BASHRC"; then
     echo "export PATH=\"\$PATH:$CBUILD_ROOT\"" >> "$BASHRC"
-    echo "PATH atualizado no $BASHRC"
+    echo "PATH updated in $BASHRC"
 else
-    echo "CBuild já está no PATH"
+    echo "cbuild is already in PATH. Enjoy :)"
 fi
 
 export PATH="$PATH:$CBUILD_ROOT"
 
-echo "Instalação concluída!"
+echo "Installation completed!"
