@@ -25,17 +25,17 @@ log() {
 }
 
 log_info() {
-    log INFO "$1"
+    log INFO "$*"
 }
 
 log_warn() {
-    log WARN "$1"
+    log WARN "$*"
 }
 
 log_debug() {
-    log DEBUG "$1"
+    log DEBUG "$*"
 }
 
 log_error() {
-    log ERROR "$1"
+    log ERROR "$*"
 }

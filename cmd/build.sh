@@ -36,7 +36,7 @@ build() {
         throw_error missing_directory build/obj
     fi
 
-    echo "Building project..."
+    verbose "Building project..."
 
     local objects=()
 

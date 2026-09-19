@@ -1,7 +1,303 @@
 ```text
-    ,-----.,-----.          ,--.,--.   ,--.
-    '  .--./|  |) /_ ,--.,--.`--'|  | ,-|  |
-    |  |    |  .-.  \|  ||  |,--.|  |' .-. |
-    '  '--'\|  '--' /'  ''  '|  ||  |\ `-' |
-    `-----'`------'  `----' `--'`--' `---' 
+,-----.,-----.          ,--.,--.   ,--.
+'  .--./|  |) /_ ,--.,--.`--'|  | ,-|  |
+|  |    |  .-.  \|  ||  |,--.|  |' .-. |
+'  '--'\|  '--' /'  ''  '|  ||  |\ `-' |
+`-----'`------'  `----' `--'`--' `---'
 ```
+
+# cbuild
+
+**cbuild** is a small, dependency-free build tool for C projects, written entirely in Bash. It scaffolds a project, compiles it incrementally, runs it, cleans it, and reports statistics about it, all through a single command: `cbuild`.
+
+It was built from first principles as a learning project: instead of relying on `make` or `cmake`, cbuild re-creates the essential behavior of a build system (project discovery, incremental compilation, configuration, logging) in a handful of readable shell scripts.
+
+## Table of contents
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [Command reference](#command-reference)
+- [Configuration](#configuration)
+- [Generated project layout](#generated-project-layout)
+- [Architecture](#architecture)
+- [Logging](#logging)
+- [Error handling](#error-handling)
+- [Limitations](#limitations)
+- [License](#license)
+
+## Features
+
+- **One-command scaffolding**: `cbuild init` creates the directory structure, a `cbuild.conf`, a "Hello, world!" `main.c`, a test template and a project README.
+- **Incremental compilation**: only sources that are missing an object file, or newer than it, are recompiled.
+- **Project discovery**: commands work from any subdirectory of a project, because cbuild walks up the tree looking for `cbuild.conf`.
+- **Compiler choice**: `gcc` or `clang`, selected at `init` time and stored in the project configuration.
+- **Built-in logging**: every operation is recorded in `logs/cbuild.log`.
+- **Project statistics**: `cbuild info` prints system and code metrics, and can also generate an HTML report with a chart.
+- **Verbose and debug modes** for seeing exactly which commands are being executed.
+
+## Requirements
+
+- Bash
+- `gcc` or `clang`
+- GNU `sed`, plus the usual coreutils (`find`, `grep`, `du`, `date`, `uname`) and `tput`
+
+## Installation
+
+> ### One-liner
+>
+> ```bash
+> git clone https://github.com/mat-afk/cbuild.git
+> cd cbuild
+> ./install.sh
+> ```
+
+### What `install.sh` does
+
+`install.sh` is what makes the `cbuild` command available from anywhere on your system. It adds the cbuild directory to your `PATH`, and it is safe to run more than once.
+
+1. **Locates itself.** It resolves the absolute path of the directory it lives in and stores it as `CBUILD_ROOT`, so it works regardless of where you cloned the repository or where you invoke it from.
+2. **Checks `~/.bashrc`.** It looks for `CBUILD_ROOT` inside your `~/.bashrc` (`grep -qF`, a fixed-string match).
+3. **Appends the `PATH` entry, only if it is missing.** If the path is not there yet, it appends this line:
+
+   ```bash
+   export PATH="$PATH:/absolute/path/to/cbuild"
+   ```
+
+   If it is already there, it reports that cbuild is already on the `PATH` and leaves the file untouched. Running the installer repeatedly never creates duplicate entries.
+4. **Updates the current process.** It also exports the new `PATH` for its own process. Because the script runs as a child process, this does not change your current terminal.
+
+To start using cbuild right away, reload your shell configuration or open a new terminal:
+
+```bash
+source ~/.bashrc
+cbuild help
+```
+
+**Notes**
+
+- The installer targets **Bash** and edits `~/.bashrc`. If you use another shell (for example zsh), add the `export PATH=...` line above to your shell's rc file manually.
+- The `cbuild` entry point must be executable (`chmod +x cbuild`). It is already marked executable in the repository.
+- **To uninstall**, remove the `export PATH=...` line that mentions the cbuild directory from `~/.bashrc`, and delete the cloned directory.
+
+## Quick start
+
+```bash
+mkdir hello && cd hello
+cbuild init          # answer the prompts (project name, binary name, compiler)
+cbuild build         # compile
+cbuild run           # build if needed, then run
+cbuild info          # show project statistics
+cbuild clean         # remove build artifacts
+```
+
+Typical output of `cbuild run` in a fresh project:
+
+```text
+Building project...
+
+Hello, world!
+```
+
+## Command reference
+
+```text
+cbuild <command> [options]
+```
+
+| Command   | Description                                                                                           |
+|-----------|-------------------------------------------------------------------------------------------------------|
+| `init`    | Initialize a new C project in the current directory. Creates a `cbuild.conf` configuration file.       |
+| `build`   | Compile source files into object files and link them into the configured executable. Only files that need to be rebuilt are compiled. |
+| `run`     | Build and run the project. If the project is not up to date, it is built before execution.             |
+| `clean`   | Remove build artifacts generated by cbuild. Source files and project configuration are not affected.   |
+| `rebuild` | Perform a clean build of the project. Equivalent to running `clean` followed by `build`.               |
+| `info`    | Display information about the current project and its configuration.                                   |
+| `help`    | Display the help message. Also shown for `-h`, `--help`, or any unrecognized command.                  |
+
+Every command except `init` and `help` must be run inside a cbuild project (any directory at or below the one that contains `cbuild.conf`).
+
+### Options
+
+| Option              | Description                                                                                      |
+|---------------------|--------------------------------------------------------------------------------------------------|
+| `-v`, `--verbose`   | Display additional information about the build process, including the commands executed by cbuild. |
+| `-d`, `--debug`     | Enable debug output with detailed information about cbuild's internal operations.                  |
+| `-h`, `--help`      | Display the help message.                                                                        |
+| `--html`, `--visual`| Used with `info`: generate an HTML page with project statistics.                                   |
+
+Place options right after the command, for example `cbuild build --verbose`.
+
+### `cbuild init`
+
+Interactively creates a new project in the **current directory**. You are prompted for three values, each with a default shown in brackets:
+
+| Prompt         | Default                    | Notes                                                        |
+|----------------|----------------------------|--------------------------------------------------------------|
+| `Project name` | Name of the current folder | Written to `cbuild.conf` as `project`.                       |
+| `Binary name`  | The project name           | Name of the executable; written as `output`.                 |
+| `Compiler`     | `gcc`                      | Must be `gcc` or `clang`, and must be installed.             |
+
+It then creates the directory structure and scaffolds `cbuild.conf`, `src/main.c`, `tests/main_test.c`, `docs/README.md` and `logs/cbuild.log`. Existing `src/` and `tests/` content is never overwritten: the templates are copied only when those directories are empty. If a `cbuild.conf` already exists, `init` refuses to run.
+
+### `cbuild build`
+
+Compiles every `.c` file found under `src/` (recursively) and links the resulting objects into `build/<output>`.
+
+- A source file is recompiled only when its object file (`build/obj/<name>.o`) does not exist or the source is newer than the object.
+- Compilation uses `-Wall -Wextra -MMD -MP` and adds `include/` to the include path (`-I include`).
+- With `--verbose`, each step is printed in a make-like style:
+
+  ```text
+  CC  main.c
+  LD  build/obj/*.o app
+  ```
+
+### `cbuild run`
+
+Builds the project if the binary is missing, then executes it.
+
+### `cbuild clean`
+
+Removes the executable and every `.o` and `.d` file in `build/obj/`. Sources, headers and configuration are left untouched.
+
+### `cbuild rebuild`
+
+Cleans and builds the project from scratch.
+
+### `cbuild info`
+
+Prints a summary of the project:
+
+- **System**: kernel version and compiler version.
+- **Quantities**: project size on disk, number of `.c` files, number of `.h` files and total number of lines.
+- **Runs**: the most recent run and build entries from the log.
+
+With `--html` (or `--visual`) it instead writes `docs/info.html`: a self-contained report with system and project cards and a pie chart of C vs. header files, rendered with Plotly (loaded from a CDN, so viewing the chart requires an internet connection).
+
+### Examples
+
+```bash
+cbuild init                # initialize a new project
+cbuild build               # build the current project
+cbuild build --verbose     # build and display the commands being executed
+cbuild run                 # build and run the project
+cbuild clean               # remove generated build files
+cbuild info --html         # generate docs/info.html
+```
+
+## Configuration
+
+Each project is configured by a `cbuild.conf` file at its root. It is a plain Bash file that cbuild `source`s, so it uses simple `key="value"` assignments:
+
+```bash
+project="example"   # project name
+output="app"        # name of the executable placed in build/
+cc="gcc"            # compiler: gcc or clang
+```
+
+The file is generated from `resources/cbuild.template.conf` during `cbuild init`, and can be edited by hand at any time.
+
+## Generated project layout
+
+After `cbuild init`, a project looks like this:
+
+```text
+my-project/
+├── cbuild.conf        # project configuration
+├── src/
+│   └── main.c         # entry point (Hello, world!)
+├── include/           # project headers (added to the include path)
+├── build/
+│   ├── obj/           # object (.o) and dependency (.d) files
+│   └── app            # the linked executable (named by `output`)
+├── tests/
+│   └── main_test.c    # test template with a minimal ASSERT macro
+├── docs/
+│   └── README.md      # generated project README (and info.html, if requested)
+└── logs/
+    └── cbuild.log     # cbuild activity log
+```
+
+A complete, already-built sample project lives in [`example/`](example/).
+
+## Architecture
+
+cbuild is organized as a thin dispatcher plus small, single-purpose scripts:
+
+```text
+cbuild/
+├── cbuild             # entry point: parses the command and dispatches
+├── install.sh         # adds cbuild to the PATH
+├── cmd/               # one script per command
+│   ├── init.sh
+│   ├── build.sh
+│   ├── run.sh
+│   ├── clean.sh
+│   ├── rebuild.sh
+│   ├── info.sh
+│   └── help.sh
+├── lib/               # shared code, loaded by the entry point
+│   ├── common.sh      # helpers: verbose, die, prompt, compiler checks, error messages
+│   ├── config.sh      # project discovery and cbuild.conf loading
+│   └── log.sh         # leveled logging to logs/cbuild.log
+├── resources/         # templates used by `init` (@@PLACEHOLDER@@ substitution)
+└── example/           # sample project
+```
+
+### Execution flow
+
+1. **Entry point (`cbuild`).** It resolves its own location (`CBUILD_ROOT`), reads the command and the first option (`-v`/`--verbose`, `-d`/`--debug`), loads the libraries, and `source`s the matching script from `cmd/`. Unknown commands fall back to the help screen.
+2. **Project discovery (`lib/config.sh`).** For commands that need a project, it walks up from the current directory until it finds `cbuild.conf`. It then defines the project paths (`SRC_DIR`, `INCLUDE_DIR`, `BUILD_DIR`, `OBJ_DIR`, `DOCS_DIR`, `LOGS_DIR`), loads `cbuild.conf`, and sets the output binary path (`build/<output>`).
+3. **Commands (`cmd/*.sh`).** Each script sets a `SCOPE` (used to tag log entries) and runs its logic using the shared helpers. `run` and `rebuild` reuse `build.sh` (and `clean.sh`) by sourcing them.
+4. **Shared helpers (`lib/common.sh`).** Verbose output, `die`, interactive `prompt` with defaults, compiler availability checks, and the central `throw_error` function that maps error names to messages.
+5. **Templates (`resources/`).** `init` renders templates with `sed`, replacing `@@PROJECT@@`, `@@BINARY@@` and `@@CC@@`.
+
+### Incremental build in detail
+
+For each `*.c` file under `src/`:
+
+```text
+object = build/obj/<filename>.o
+if object does not exist, or source is newer than object:
+    compile  ->  <cc> -I include -Wall -Wextra -MMD -MP -c <source> -o <object>
+link all objects  ->  <cc> <objects...> -o build/<output>
+```
+
+## Logging
+
+Every command writes to `logs/cbuild.log`, one entry per line, **newest first**:
+
+```text
+[2026-09-18 22:33:09] [run] [INFO] The project has started running.
+[2026-09-18 22:33:06] [build] [INFO] Project built successfully.
+```
+
+The format is `[timestamp] [command] [LEVEL] message`, with levels `INFO`, `WARN`, `DEBUG` and `ERROR`. Run any command with `--debug` to also print `DEBUG` messages to the terminal.
+
+## Error handling
+
+Errors are reported to `stderr` with a message and a non-zero exit status. The most common ones:
+
+| Situation                                        | Message (summary)                                                   |
+|--------------------------------------------------|---------------------------------------------------------------------|
+| Command run outside a project                    | `this is not a cbuild project (run 'cbuild init')`                  |
+| `init` in a directory that already has a config  | `current directory is already a cbuild project (found cbuild.conf)` |
+| Configured compiler is not installed             | `'<cc>' not installed`                                              |
+| A required directory is missing                  | `directory '<dir>' does not exist`                                  |
+| No `.c` files under `src/`                       | `no source file was found in 'src' directory`                       |
+| `run` without a binary                           | `missing binaries (run 'cbuild build' to compile project)`          |
+
+## Limitations
+
+- Options are recognized only when they come right after the command (`cbuild build -v`, not `cbuild -v build`).
+- Recompilation is decided by comparing each `.c` file with its object file. Dependency (`.d`) files are generated but not yet used to track header changes.
+- Object files are named after the source file's base name, so two sources with the same file name in different subdirectories would collide.
+- The `tests/` directory is scaffolded but not yet compiled or run by cbuild.
+- Only `gcc` and `clang` are supported.
+- `install.sh` edits `~/.bashrc` only.
+
+## License
+
+This project is licensed under the **GNU General Public License v3.0**. See [LICENSE](LICENSE) for details.

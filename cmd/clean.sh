@@ -5,7 +5,7 @@ SCOPE="clean"
 clean() {
     local temp=("$BIN" "$OBJ_DIR/*.o" "$OBJ_DIR/*.d")
 
-    echo "Cleaning..."
+    verbose "Cleaning..."
 
     verbose
     verbose "RM  $output build/obj/*.o build/obj/*.d"

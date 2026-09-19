@@ -1,3 +1,79 @@
+[2026-09-18 23:32:43] [build] [INFO] The project has started running.
+[2026-09-18 23:32:43] [build] [INFO] Project built successfully.
+[2026-09-18 23:32:43] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:32:39] [build] [INFO] Project built successfully.
+[2026-09-18 23:32:39] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:32:33] [build] [INFO] The project has started running.
+[2026-09-18 23:32:33] [build] [INFO] Project built successfully.
+[2026-09-18 23:32:33] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:31:49] [build] [INFO] The project has started running.
+[2026-09-18 23:31:49] [build] [INFO] Project built successfully.
+[2026-09-18 23:31:49] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:31:49] [build] [DEBUG] gcc -I/home/mateus/Projects/cbuild/example/include -Wall -Wextra -MMD -MP -c /home/mateus/Projects/cbuild/example/src/main.c -o /home/mateus/Projects/cbuild/example/build/obj/main.o
+[2026-09-18 23:31:49] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 23:31:40] [build] [INFO] The project has started running.
+[2026-09-18 23:31:40] [build] [INFO] Project built successfully.
+[2026-09-18 23:31:40] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:31:40] [build] [DEBUG] gcc -I/home/mateus/Projects/cbuild/example/include -Wall -Wextra -MMD -MP -c /home/mateus/Projects/cbuild/example/src/main.c -o /home/mateus/Projects/cbuild/example/build/obj/main.o
+[2026-09-18 23:31:40] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 23:30:41] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:30:41] [clean] [DEBUG] 
+[2026-09-18 23:30:41] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:30:41] [clean] [DEBUG] 
+[2026-09-18 23:30:41] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:30:41] [clean] [DEBUG] 
+[2026-09-18 23:30:29] [run] [INFO] The project has started running.
+[2026-09-18 23:30:27] [run] [INFO] The project has started running.
+[2026-09-18 23:28:19] [run] [INFO] The project has started running.
+[2026-09-18 23:28:10] [build] [INFO] The project has started running.
+[2026-09-18 23:28:10] [build] [INFO] Project built successfully.
+[2026-09-18 23:28:10] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:28:10] [build] [DEBUG] gcc -I/home/mateus/Projects/cbuild/example/include -Wall -Wextra -MMD -MP -c /home/mateus/Projects/cbuild/example/src/main.c -o /home/mateus/Projects/cbuild/example/build/obj/main.o
+[2026-09-18 23:28:10] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 23:28:10] [run] [DEBUG] There are newer sources, rebuilding.
+[2026-09-18 23:28:06] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:28:06] [clean] [DEBUG] 
+[2026-09-18 23:28:06] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:28:06] [clean] [DEBUG] 
+[2026-09-18 23:28:06] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:28:06] [clean] [DEBUG] 
+[2026-09-18 23:27:41] [build] [INFO] Project built successfully.
+[2026-09-18 23:27:41] [build] [DEBUG] gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:27:41] [build] [DEBUG] gcc -I/home/mateus/Projects/cbuild/example/include -Wall -Wextra -MMD -MP -c /home/mateus/Projects/cbuild/example/src/main.c -o /home/mateus/Projects/cbuild/example/build/obj/main.o
+[2026-09-18 23:27:41] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 23:27:38] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:27:38] [clean] [DEBUG] 
+[2026-09-18 23:27:38] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:27:38] [clean] [DEBUG] 
+[2026-09-18 23:27:38] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:27:38] [clean] [DEBUG] 
+[2026-09-18 23:27:37] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:27:37] [clean] [DEBUG] 
+[2026-09-18 23:27:37] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:27:37] [clean] [DEBUG] 
+[2026-09-18 23:27:37] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:27:37] [clean] [DEBUG] 
+[2026-09-18 23:27:20] [build] [INFO] INFO Project built successfully.
+[2026-09-18 23:27:20] [build] [DEBUG] DEBUG gcc /home/mateus/Projects/cbuild/example/build/obj/main.o -o /home/mateus/Projects/cbuild/example/build/app
+[2026-09-18 23:27:20] [build] [DEBUG] DEBUG gcc -I/home/mateus/Projects/cbuild/example/include -Wall -Wextra -MMD -MP -c /home/mateus/Projects/cbuild/example/src/main.c -o /home/mateus/Projects/cbuild/example/build/obj/main.o
+[2026-09-18 23:27:20] [build] [DEBUG] DEBUG main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 23:27:16] [clean] [INFO] INFO Project cleaned with success.
+[2026-09-18 23:27:16] [clean] [DEBUG] DEBUG 
+[2026-09-18 23:27:16] [clean] [INFO] INFO Project cleaned with success.
+[2026-09-18 23:27:16] [clean] [DEBUG] DEBUG 
+[2026-09-18 23:27:16] [clean] [INFO] INFO Project cleaned with success.
+[2026-09-18 23:27:16] [clean] [DEBUG] DEBUG 
+[2026-09-18 23:24:34] [run] [INFO] The project has started running.
+[2026-09-18 23:24:28] [build] [INFO] Project built successfully.
+[2026-09-18 23:24:28] [build] [DEBUG] gcc
+[2026-09-18 23:24:28] [build] [DEBUG] gcc
+[2026-09-18 23:24:28] [build] [DEBUG] main.o does not exist or main.c is newer than main.o; recompiling...
+[2026-09-18 23:24:24] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:24:24] [clean] [DEBUG] 
+[2026-09-18 23:24:24] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:24:24] [clean] [DEBUG] 
+[2026-09-18 23:24:24] [clean] [INFO] Project cleaned with success.
+[2026-09-18 23:24:24] [clean] [DEBUG] 
 [2026-09-18 22:33:09] [run] [INFO] The project has started running.
 [2026-09-18 22:33:06] [build] [INFO] Project built successfully.
 [2026-09-18 22:33:06] [build] [DEBUG] gcc
